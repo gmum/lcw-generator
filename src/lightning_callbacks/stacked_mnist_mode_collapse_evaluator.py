@@ -37,5 +37,7 @@ class StackedMnistModeCollapseEvaluator(Callback):
         kl_div = F.kl_div(p.unsqueeze_(0).log(), q.unsqueeze_(0), reduction='sum')
         print(kl_div)
         tensorboard_logger: TensorBoardLogger = pl_module.logger  # type: ignore
-        tensorboard_logger.log_metric('modes_count', torch.count_nonzero(modes_tensor), pl_module.current_epoch)
-        tensorboard_logger.log_metric('kl_div', kl_div, pl_module.current_epoch)
+        tensorboard_logger.log_metrics({
+            'modes_count': torch.count_nonzero(modes_tensor),
+            'kl_div': kl_div
+            }, pl_module.current_epoch)
