@@ -1,6 +1,6 @@
 from lightning_modules.base_generative_module import BaseGenerativeModule
 from pytorch_lightning.callbacks import Callback
-from pytorch_lightning.loggers import NeptuneLogger
+from pytorch_lightning.loggers import TensorBoardLogger
 from torchvision.utils import make_grid
 from common.noise_creator import NoiseCreator
 
@@ -20,5 +20,5 @@ class GenerateSampleImagesCallback(Callback):
         sampled_images = generator(self.__random_sampled_latent.to(pl_module.device)).cpu()
         sampled_images = sampled_images[0:self.__sample_count]
         reconstructions = make_grid(sampled_images).permute(1, 2, 0).numpy()
-        neptune_logger: NeptuneLogger = pl_module.logger  # type: ignore
-        neptune_logger.log_image('sampled_images', reconstructions, pl_module.current_epoch)
+        tensorboard_logger: TensorBoardLogger = pl_module.logger  # type: ignore
+        tensorboard_logger.log_image('sampled_images', reconstructions, pl_module.current_epoch)

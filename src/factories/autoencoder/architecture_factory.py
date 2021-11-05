@@ -16,7 +16,7 @@ def get_architecture(identifier: str, z_dim: int) -> tuple[Module, Module]:
     if identifier == 'celeba':
         return CelebaEncoder(z_dim), CelebaDecoder(z_dim)
 
-    if identifier == 'svhn' or identifier == 'cifar10':
+    if identifier == 'svhn':
         return SvhnEncoder(z_dim), SvhnDecoder(z_dim)
 
     if identifier == 'stacked_mnist':

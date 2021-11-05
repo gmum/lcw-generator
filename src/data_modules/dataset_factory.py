@@ -1,4 +1,4 @@
-from data_modules.dataset_resolvers import get_fmnist_dataset, get_mnist_dataset, get_celeba_dataset, get_svhn_dataset, get_cifar10_dataset, get_kmnist_dataset
+from data_modules.dataset_resolvers import get_fmnist_dataset, get_mnist_dataset, get_celeba_dataset, get_svhn_dataset, get_kmnist_dataset
 from typing import Callable
 from torchvision.datasets import VisionDataset
 from data_modules.drop_target_dataset_wrapper import DropTargetDatasetWrapper
@@ -20,7 +20,6 @@ class DatasetFactory:
             'stacked_mnist': get_mnist_dataset,
             'celeba': get_celeba_dataset,
             'svhn': get_svhn_dataset,
-            'cifar10': get_cifar10_dataset,
             'kmnist': get_kmnist_dataset
         }
         dataset_resolver = resolvers[self.__identifier]
@@ -35,7 +34,6 @@ class DatasetFactory:
             'stacked_mnist': get_mnist_dataset,
             'celeba': get_celeba_dataset,
             'svhn': get_svhn_dataset,
-            'cifar10': get_cifar10_dataset,
             'kmnist': get_kmnist_dataset
         }
         dataset_resolver = resolvers[self.__identifier]

@@ -26,7 +26,7 @@ def run():
         SwdNormalityEvaluator(noise_creator)
     ]
 
-    experiment_name = f'ae-{hparams.model}-{hparams.lambda_val}-{hparams.batch_size}-{hparams.optimizer}-{hparams.lr}'
+    experiment_name = f'ae-{hparams.model}-{hparams.lambda_val}-{hparams.batch_size}-{hparams.lr}'
     train(hparams, autoencoder_model, callbacks, output_dir, experiment_name, 'autoencoder')
 
 

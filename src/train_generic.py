@@ -13,7 +13,6 @@ from typing import Iterable, Union
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from pytorch_lightning.callbacks.base import Callback
-from pytorch_lightning.loggers.neptune import NeptuneLogger
 from lightning_callbacks.eval_generative_metrics import EvalGenerativeMetrics
 from lightning_callbacks.cw_distance_evaluator import CwDistanceEvaluator
 from lightning_callbacks.sw_distance_evaluator import SwDistanceEvaluator
@@ -89,20 +88,8 @@ def train(hparams: BaseArguments, lightning_module: BaseGenerativeModule, callba
         )
         all_callbacks = [checkpoint_callback, *all_callbacks]
 
-    neptune_logger = NeptuneLogger(
-        project_name="gmum/LCW",
-        offline_mode=hparams.offline_mode,
-        params=lightning_module.hparams,
-        experiment_name=experiment_name)
-
-    neptune_logger.append_tags(tags)
-    neptune_logger.append_tags(hparams.dataset)
-    neptune_logger.append_tags(hparams.model)
-    if hparams.extra_tag is not None:
-        neptune_logger.append_tags(hparams.extra_tag)
 
     trainer = pl.Trainer.from_argparse_args(hparams,
-                                            logger=neptune_logger,
                                             default_root_dir=output_dir,
                                             callbacks=all_callbacks)
 

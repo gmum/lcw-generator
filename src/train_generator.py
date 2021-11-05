@@ -14,7 +14,7 @@ def run():
 
     callbacks: list[Callback] = []
 
-    experiment_name = f'gen-{hparams.model}-{hparams.batch_size}-{hparams.noise_dim}-{hparams.optimizer}-{hparams.lr}'
+    experiment_name = f'gen-{hparams.model}-{hparams.batch_size}-{hparams.noise_dim}-{hparams.lr}'
     train(hparams, generator_model, callbacks, output_dir, experiment_name, 'generator')
 
 

@@ -12,7 +12,7 @@ def get_architecture(identifier: str, noise_dim: int) -> Module:
     if identifier == 'celeba':
         return CelebaGenerator(noise_dim)
 
-    if identifier == 'svhn' or identifier == 'cifar10':
+    if identifier == 'svhn':
         return SvhnGenerator(noise_dim)
 
     if identifier == 'stacked_mnist':

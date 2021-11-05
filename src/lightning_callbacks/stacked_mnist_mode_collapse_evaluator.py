@@ -1,6 +1,6 @@
 from lightning_modules.base_generative_module import BaseGenerativeModule
 from pytorch_lightning.callbacks import Callback
-from pytorch_lightning.loggers import NeptuneLogger
+from pytorch_lightning.loggers import TensorBoardLogger
 from common.noise_creator import NoiseCreator
 from lightning_modules.classifier_mnist_module import ClassifierMNIST
 import torch
@@ -35,6 +35,6 @@ class StackedMnistModeCollapseEvaluator(Callback):
         p = modes_tensor / modes_tensor.sum() + 1e-6
         kl_div = F.kl_div(p.unsqueeze_(0).log(), q.unsqueeze_(0), reduction='sum')
         print(kl_div)
-        neptune_logger: NeptuneLogger = pl_module.logger  # type: ignore
-        neptune_logger.log_metric('modes_count', torch.count_nonzero(modes_tensor), pl_module.current_epoch)
-        neptune_logger.log_metric('kl_div', kl_div, pl_module.current_epoch)
+        tensorboard_logger: TensorBoardLogger = pl_module.logger  # type: ignore
+        tensorboard_logger.log_metric('modes_count', torch.count_nonzero(modes_tensor), pl_module.current_epoch)
+        tensorboard_logger.log_metric('kl_div', kl_div, pl_module.current_epoch)

@@ -20,7 +20,7 @@ def run():
     gamma_val = silverman_rule_of_thumb(std_value, hparams.batch_size)
     generator_model.set_gamma_value(gamma_val)
     callbacks: list[Callback] = []
-    experiment_name = f'lg-{hparams.model}-{hparams.batch_size}-{hparams.noise_dim}-{hparams.optimizer}-{hparams.lr}'
+    experiment_name = f'lg-{hparams.model}-{hparams.batch_size}-{hparams.noise_dim}-{hparams.lr}'
     train(hparams, generator_model, callbacks, output_dir, experiment_name, 'latent-generator', wrapped_data_module)
 
 

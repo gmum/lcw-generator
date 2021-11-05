@@ -1,6 +1,6 @@
 from data_modules.to_rgb_tensor import ToLongTensor, ToRgbTensor
 from torchvision import transforms
-from torchvision.datasets import MNIST, FashionMNIST, CelebA, SVHN, KMNIST, CIFAR10
+from torchvision.datasets import MNIST, FashionMNIST, CelebA, SVHN, KMNIST
 from torchvision.transforms.transforms import Compose
 
 
@@ -59,16 +59,6 @@ def get_svhn_dataset(dataroot: str, train: bool, eval: bool) -> SVHN:
                 split=split,
                 download=True,
                 transform=celeba_transforms)
-
-
-def get_cifar10_dataset(dataroot: str, train: bool, eval: bool) -> CIFAR10:
-    celeba_transforms = get_transforms_for_eval_dataset([
-        transforms.ToTensor()
-    ], eval)
-    return CIFAR10(root=dataroot,
-                   train=train,
-                   download=True,
-                   transform=celeba_transforms)
 
 
 def get_transforms_for_grayscale_eval_dataset(transforms_list: list, eval: bool) -> Compose:
