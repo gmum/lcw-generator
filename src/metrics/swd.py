@@ -4,11 +4,6 @@ from common.noise_creator import NoiseCreator
 # Code adapted to use PyTorch instead of Tensorflow
 
 
-def sliced_wasserstein_distance_normality(z: torch.Tensor, noise_creator: NoiseCreator) -> torch.Tensor:
-    swd = sliced_wasserstein_distance(z, noise_creator.create(z.size(0), z.device), 50)
-    return swd
-
-
 def sliced_wasserstein_distance(encoded_samples: torch.Tensor,
                                 distribution_samples: torch.Tensor,
                                 num_projections: int) -> torch.Tensor:

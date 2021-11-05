@@ -21,8 +21,7 @@ Experiments are written in `pytorch-lightning` to decouple the science code from
 
 ## Conducting the experiments
 
-To execute experiments described in Table 1 in the paper run scripts located in `src/reproduce_table1.sh`
-To execute experiments described in Table 3 in the paper run scripts located in `src/reproduce_table3.sh`. Because the training includes two-stage training it is necessary to provide path to checkpoint created in the first stage as an input parameter to second stage.
+To execute experiments described in Table 4 in the paper run scripts located in `src/reproduce_table4.sh`
 
 The repository supports running CWAE and reuses code provided in SWAE paper. All of the implementations are based on the respective papers and repositories.
 
@@ -81,6 +80,29 @@ As mentioned in paper we are using precalculated values of Silverman rule of thu
 ## Stacked MNIST experiment
 
 To perform Stacked MNIST experiment you can use `train_mnist_classifier.py` to train classifier first.
+
+To train classifier run script:
+`python -m train_mnist_classifier --model classifier --dataset stacked_mnist --dataroot <dataroot_path>`
+
+stop it when it reaches expected level of accuracy and later reuse classifier:
+
+### CWAE
+
+`
+python -m train_autoencoder --model cwae --dataset stacked_mnist --dataroot <dataroot_path> --latent_dim 24 --classifier_checkpoint <classifier_ckpt_path> --gpus 1
+`
+
+### CW2
+
+`
+python -m train_autoencoder --model cw2_dynamic --dataset stacked_mnist --dataroot <dataroot_path> --latent_dim 24 --classifier_checkpoint <classifier_ckpt_path> --gpus 1 --save_checkpoint --verbose
+`
+
+### LCW
+
+`
+python -m train_latent_generator --model cwg_dynamic --dataset stacked_mnist --dataroot <dataroot_path> --noise_dim 24 --classifier_checkpoint <classifier_ckpt_path> --gpus 1 --ae_ckpt <cw2_checkpoint_path>
+`
 
 ## Environment
 

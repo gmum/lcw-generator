@@ -1,7 +1,6 @@
 from data_modules.dataset_factory import DatasetFactory
 from data_modules.latent_generator_dataset_data_module import LatentGeneratorDataModule
 from data_modules.stacked_mnist_data_module import StackedMnistDataModule
-from lightning_callbacks.silverman_gamma_evaluator import SilvermanGammaEvaluator
 from common.noise_creator import NoiseCreator
 from lightning_callbacks.generate_sample_images_callback import GenerateSampleImagesCallback
 from data_modules.image_dataset_data_module import ImageDatasetDataModule
@@ -15,7 +14,6 @@ from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from pytorch_lightning.callbacks.base import Callback
 from lightning_callbacks.eval_generative_metrics import EvalGenerativeMetrics
 from lightning_callbacks.cw_distance_evaluator import CwDistanceEvaluator
-from lightning_callbacks.sw_distance_evaluator import SwDistanceEvaluator
 from lightning_modules.classifier_mnist_module import ClassifierMNIST
 
 
@@ -48,9 +46,7 @@ def train(hparams: BaseArguments, lightning_module: BaseGenerativeModule, callba
         assert isinstance(data_module, ImageDatasetDataModule)
 
         callbacks = [
-            SilvermanGammaEvaluator(),
             CwDistanceEvaluator(),
-            SwDistanceEvaluator(),
             *callbacks
         ]
 

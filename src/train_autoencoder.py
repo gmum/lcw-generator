@@ -7,7 +7,6 @@ from lightning_modules.autoencoder_module import AutoEncoderModule, AutoEncoderP
 from train_generic import train
 from lightning_callbacks.rec_err_evaluator import RecErrEvaluator
 from lightning_callbacks.cw_normality_evaluator import CwNormalityEvaluator
-from lightning_callbacks.swd_normality_evaluator import SwdNormalityEvaluator
 
 
 def run():
@@ -17,13 +16,11 @@ def run():
     hparams: AutoEncoderParams = parser.parse_args()  # type: ignore
     output_dir = f'../results/ae/{hparams.dataset}/{hparams.latent_dim}/{hparams.model}'
     autoencoder_model = AutoEncoderModule(hparams)
-    noise_creator = NoiseCreator(hparams.latent_dim)
 
     callbacks: list[Callback] = [
         RecErrEvaluator(),
         CwNormalityEvaluator(),
-        DecodeImagesCallback(64),
-        SwdNormalityEvaluator(noise_creator)
+        DecodeImagesCallback(64)
     ]
 
     experiment_name = f'ae-{hparams.model}-{hparams.lambda_val}-{hparams.batch_size}-{hparams.lr}'
