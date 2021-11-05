@@ -22,7 +22,8 @@ class StackedMnistModeCollapseEvaluator(Callback):
         for i in range(self.__num_of_samples // self.__sample_count):
             self.__random_sampled_latent = self.__noise_creator.create(self.__sample_count, pl_module.device)
             generator = pl_module.get_generator()
-            sampled_images = generator(self.__random_sampled_latent)
+            sampled_images = generator(self.__random_sampled_latent.to(pl_module.device))
+            self.__classifier = self.__classifier.to(pl_module.device)
             first_number_labels = self.__classifier.predict_labels(sampled_images[:, 0:1, :, :])
             second_number_labels = self.__classifier.predict_labels(sampled_images[:, 1:2, :, :])
             third_number_labels = self.__classifier.predict_labels(sampled_images[:, 2:3, :, :])
