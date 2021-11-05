@@ -6,16 +6,13 @@ This repository contains a PyTorch implementation of [Generative models with ker
 
 ```text
 |-- src/ - contains an implementation of the models proposed in the paper allowing to reproduce experiments from the original paper
-|---- architectures/ - files containing architectures proposed in the paper
-|---- externals/ - code adapted from the [external repository](https://github.com/mseitzer/pytorch-fid) to compute FID Score of models
-|---- evaluators/ - implementation of evaluators of metrics that will be reported in experiments
+|---- architecture/ - files containing architectures proposed in the paper
+|---- lightning_callbacks/ - implementation of evaluators of metrics reported in our experiments
 |---- factories/ - factories used to create objects proper objects base on command line arguments. Subfolders contain factories for specific models
 |---- lighting_modules/ - implementation of experiments in pytorch lightning
 |---- metrics/ - directory containing the implementation of all of the metrics used in paper
 |---- modules/ - custom neural network layers used in models
-|---- tests/ - a bunch of unit tests
 |---- train_autoencoder.py - the main script to run all of the experiments
-|---- precalc_fid.py - additional script that can be used to precalculate FID statistics for datasets
 |-- results/ - directory that will be created to store the results of conducted experiments
 |-- data/ - default directory that will be used as a source of data and place to download datasets
 ```
@@ -42,6 +39,49 @@ Results are stored in tensorboard format. To browse them run the following comma
 
 The repository uses default datasets provided by PyTorch for MNIST, FashionMNIST, and CELEBA. To convert CELEB-A to 64x64 images we first center crop images to 140x140 and then resize them to 64x64.
 
+
+### Silverman rule of thumb values
+
+As mentioned in paper we are using precalculated values of Silverman rule of thumb. Below is a table that contains precalculated values for used datasets. To compute these values use `compute_cw_dataset_statistics.py` script.
+
+<center>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th colspan=6><center>Dataset</center></th>
+            </tr>
+            <tr>
+                <th>Batch size</th>
+                <th><center>MNIST</center></th>
+                <th><center>F-MNIST</center></th>
+                <th><center>KMNIST</center></th>
+                <th><center>SVHN</center></th>
+                <th><center>CIFAR-10</center></th>
+                <th><center>CELEBA</center></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><center><b>64</b></center></td>
+                <td>0.0202</td><td>0.0265</td><td>0.0258</td><td>0.0084</td><td>0.0134</td><td>0.0166</td>
+            </tr>
+            <tr>
+                <td><center><b>128</b></center></td>
+                <td>0.0153</td><td>0.0201</td><td>0.0196</td><td>0.0064</td><td>0.0102</td><td>0.0124</td>
+            </tr>
+            <tr>
+                <td><center><b>256</b></center></td>
+                <td>0.0116</td><td>0.0152</td><td>0.0148</td><td>0.0049</td><td>0.0077</td><td>0.0094</td>
+            </tr>
+        </tbody>
+    </table>
+</center>
+
+## Stacked MNIST experiment
+
+To perform Stacked MNIST experiment you can use `train_mnist_classifier.py` to train classifier first.
+
 ## Environment
 
 - python3
@@ -49,14 +89,7 @@ The repository uses default datasets provided by PyTorch for MNIST, FashionMNIST
 - torchvision
 - numpy
 - pytorch-lightning
-
-## Additional links
-
-To compute FID Scores we have adapted the code from:
-
-- [Pytorch FID](https://github.com/mseitzer/pytorch-fid)
-
-Commit: 011829daeccc84341c1e8e6061d10a640a495573)\*
+- torch-fidelity
 
 ## License
 

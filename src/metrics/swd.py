@@ -1,7 +1,12 @@
 import torch
-
+from common.noise_creator import NoiseCreator
 # Implementation is based on: https://github.com/skolouri/swae/blob/master/MNIST_SlicedWassersteinAutoEncoder_Circle.ipynb
 # Code adapted to use PyTorch instead of Tensorflow
+
+
+def sliced_wasserstein_distance_normality(z: torch.Tensor, noise_creator: NoiseCreator) -> torch.Tensor:
+    swd = sliced_wasserstein_distance(z, noise_creator.create(z.size(0), z.device), 50)
+    return swd
 
 
 def sliced_wasserstein_distance(encoded_samples: torch.Tensor,
