@@ -21,4 +21,4 @@ class GenerateSampleImagesCallback(Callback):
         sampled_images = sampled_images[0:self.__sample_count]
         reconstructions = make_grid(sampled_images).permute(1, 2, 0).numpy()
         tensorboard_logger: TensorBoardLogger = pl_module.logger  # type: ignore
-        tensorboard_logger.log_image('sampled_images', reconstructions, pl_module.current_epoch)
+        tensorboard_logger.experiment.add_images('sampled_images', reconstructions, pl_module.current_epoch)

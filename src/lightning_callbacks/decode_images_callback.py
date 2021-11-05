@@ -21,7 +21,7 @@ class DecodeImagesCallback(Callback):
             self.__test_reconstruction_images = batch[0:self.__samples_count].cpu()
             reconstructions = make_grid(self.__test_reconstruction_images).permute(1, 2, 0).numpy()
             logger: TensorBoardLogger = pl_module.logger
-            logger.log_image('target_distribution_visualization', reconstructions, pl_module.current_epoch)
+            logger.experiment.add_images('target_distribution_visualization', reconstructions, pl_module.current_epoch)
 
     def on_validation_epoch_end(self, _: Trainer, pl_module: BaseGenerativeModule) -> None:
         assert self.__test_reconstruction_images is not None
@@ -31,4 +31,4 @@ class DecodeImagesCallback(Callback):
         _, decoded_images = pl_module(self.__test_reconstruction_images.to(pl_module.device))
         reconstructions = torch.stack(list(itertools.chain(*zip(self.__test_reconstruction_images.cpu(), decoded_images.cpu()))))
         reconstructions = make_grid(reconstructions).permute(1, 2, 0).numpy()
-        logger.log_image('reconstructions', reconstructions, pl_module.current_epoch)
+        logger.experiment.add_images('reconstructions', reconstructions, pl_module.current_epoch)
