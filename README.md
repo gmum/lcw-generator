@@ -106,12 +106,21 @@ python -m train_latent_generator --model cwg_dynamic --dataset stacked_mnist --d
 
 ## Environment
 
-- python3
-- pytorch
-- torchvision
-- numpy
-- pytorch-lightning
-- torch-fidelity
+The code was built and executed on `Python 3.9.13` and dependencies specified in [requirements.txt](./requirements.txt).
+
+To create virtual environment please verify with `python --version` if you are using `Python 3.9.13` and execute:
+
+`python -m venv .venv`
+
+To install please activate your environment using source on Linux or `. \.venv\Scripts\Activate.ps1` on Windows.
+
+and install dependencies:
+
+`pip install -r .\requirements.txt`
+
+Please note that torch dependencies require specifying find links parameter:
+
+`https://download.pytorch.org/whl/torch_stable.html`
 
 ## License
 
